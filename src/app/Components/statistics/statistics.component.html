@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+
+<div class="container container-sm container-md container-lg container-xl container-fluid">
+    <div class="row mt-5">
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <div class="card shadow text-center text-sm-center text-md-center text-lg-center text-xl-center">
+                <div class="card-body">
+                    <p>
+                        <fa-icon [icon]="usersIcon" size="2x"></fa-icon>
+                    </p>
+                    <p class="font-weight-bolder">{{users}}</p>
+                </div>
+                <div class="card-footer font-weight-bolder">Total Users</div>
+            </div>
+        </div>
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <div class="card shadow text-center text-sm-center text-md-center text-lg-center text-xl-center">
+                <div class="card-body">
+                    <p>
+                        <fa-icon [icon]="postsIcon" size="2x"></fa-icon>
+                    </p>
+                    <p class="font-weight-bolder">{{posts}}</p>
+                </div>
+                <div class="card-footer font-weight-bolder">Total Posts</div>
+            </div>
+        </div>
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <div class="card shadow text-center text-sm-center text-md-center text-lg-center text-xl-center">
+                <div class="card-body">
+                    <p>
+                        <fa-icon [icon]="usersIcon" size="2x"></fa-icon>
+                    </p>
+                    <p class="font-weight-bolder">{{loggedinUsers}}</p>
+                </div>
+                <div class="card-footer font-weight-bolder">Online Users</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <div class="h-25 d-inline-block">
+                <canvas id="barChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

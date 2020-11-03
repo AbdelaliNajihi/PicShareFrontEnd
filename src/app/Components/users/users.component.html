@@ -1,0 +1,78 @@
+<app-navbar></app-navbar>
+
+<div class="container container-sm container-md container-lg container-xl container-fluid mt-2" *ngIf="user">
+    <div class="row">
+        <div class="form-group col2 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            <select #role class="custom-select">
+                <option *ngFor="let r of roles" [value]="r.name">{{r.name}}</option>
+            </select>
+            <label class="font-weight-bold">{{user.username}}</label>
+        </div>
+        <div style="margin-right: 1%;">
+            <button class="btn btn-success" (click)="addRole(user.userId, role.value)">
+                <fa-icon [icon]="addRoleIcon"></fa-icon>
+            </button>
+        </div>
+        <div>
+            <button class="btn btn-danger" (click)="removeRole(user.userId, role.value)">
+                <fa-icon [icon]="removeRoleIcon"></fa-icon>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div
+    class="container container-sm container-md container-lg container-xl container-fluid mt-2 table-responsive table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+    <table class="table table-bordered" *ngIf="users">
+        <caption>List of users : {{users.length}}</caption>
+        <thead>
+            <tr class="bg-light">
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Gender</th>
+                <th scope="col">BirthDate</th>
+                <th scope="col">Biography</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of users">
+                <th scope="row">{{u.userId}}<span class="badge badge-danger" *ngIf="u.deleted === true"
+                        style="margin-left: 10%;">
+                        <fa-icon [icon]="deleteUserIcon" size="lg"></fa-icon>
+                    </span></th>
+                <td>{{u.username}}</td>
+                <td>{{u.email}}</td>
+                <td>{{u.gender}}</td>
+                <td>{{u.birthDate}}</td>
+                <td>{{u.biography}}</td>
+                <td><button class="btn btn-primary" (click)="getUser(u)" style="margin-right: 5%;">
+                        <fa-icon [icon]="userEditIcon"></fa-icon>
+                    </button>
+                    <button class="btn btn-danger" (click)="showConfirm(u.username)">
+                        <fa-icon [icon]="deleteUserIcon"></fa-icon>
+                    </button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<p-toast position="center" key="c" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div style="text-align: center">
+            <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+            <h3>{{message.summary}}</h3>
+            <p>{{message.detail}}</p>
+        </div>
+        <div class="col2" *ngFor="let u of users">
+            <div class="float-left"> 
+                <button type="button" class="btn btn-light " (click)="deleteUser(u.userId)">Yes</button>
+            </div>
+            <div class="float-right">
+                <button type="buttdarkon" class="btn btn-dark" (click)="onReject()">No</button>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<app-footer></app-footer>

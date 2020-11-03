@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <div class="card mb-1 mt-2 ml-5" style="width: 35rem;">
+            <div class="card-header">
+                <img [src]="getUserPicture(p.userApp.userId)" class="rounded-circle" alt="..." width="15%">
+                <a routerLink="/profile/{{ p.userApp.username }}" style="margin-left: 5%;">{{p.userApp.username}}</a>
+            </div>
+            <img [src]="getPostPicture(p.postId)" class="card-img-top" alt="..." style="height: 50%;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="float-left float-sm-left float-md-left float-lg-left float-xl-left">
+                        <span (click)="likePost(p.postId)" style="cursor: pointer;">
+                            <fa-icon [icon]="['far', 'heart']" size="lg"></fa-icon>
+                        </span>
+                        <span (click)="dislikePost(p.postId)" style="cursor: pointer; margin-left: 5px;">
+                            <fa-icon [icon]="thumbsDown" size="lg" class=""></fa-icon>
+                        </span>
+                    </div>
+                    <div class="float-right float-sm-right float-md-right float-lg-right float-xl-right">
+                        <span class="badge badge-light">{{p.postedDate | date:'medium'}}</span>
+                        <span class="badge badge-light likes" style="font-weight: bolder; margin-left: 5px;">{{p.likes}}
+                            <small>Likes</small></span>
+                    </div>
+                </div>
+                <div style="margin-top: 2%;">
+                    <div class="float-left float-sm-left float-md-left float-lg-left float-xl-left">
+                        <span class="badge badge-primary" (click)="showCommentsList()" style="cursor: pointer;">
+                            <fa-icon [icon]="showcomments" size="lg"></fa-icon>
+                        </span>
+                    </div>
+                    <div class="float-right float-sm-right float-md-right float-lg-right float-xl-right">
+                        <span
+                            class="badge badge-success float-right float-sm-right float-md-right float-lg-right float-xl-right"
+                            (click)="showCommentInput()" style="cursor: pointer;">
+                            <fa-icon [icon]="commentIcon" size="lg"></fa-icon>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="card-body mb-1" *ngIf="commentInput">
+                <form (ngSubmit)="addComment(commentForm, p.postId)" #commentForm="ngForm">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Type a comment..." name="content"
+                            [(ngModel)]="commentDto.content" autocomplete="off" required>
+                        <input type="hidden" class="form-control" name="postId" ngModel="{{p.postId}}">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="submit" [disabled]="commentForm.invalid">
+                                <fa-icon [icon]="typeCommentIcon"></fa-icon>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+            <div class="card-body" *ngIf="commentList" style="max-height: 200px; overflow-y: auto;">
+                <div *ngFor="let cmnt of p.comments">
+                    <div class="row">
+                        <div class="col-md-12" style="padding: -50px 0px;">
+                            <p>
+                                <a class="float-left float-sm-left float-md-left float-lg-left float-xl-left"
+                                    routerLink="/profile/{{cmnt.userApp.username}}"><strong>{{cmnt.userApp.username}}</strong></a>
+                                <span
+                                    class="text-secondary float-right float-sm-right float-md-right float-lg-right float-xl-right">{{cmnt.commentDate | date: 'short'}}</span>
+                            </p>
+                            <div class="clearfix"></div>
+                            <p>{{cmnt.content}}</p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col4 col-sm-4 col-md-4 col-lg-4 col-xl-4" style="margin-left: 32%;">
+        <div class="alert alert-dismissible fade show mt-2 ml-5" role="alert"
+            [ngClass]="{'alert-success': isLiked, 'alert-warning': isDisliked}">
+            <span *ngIf="isLiked"><strong>{{userApp.username}}</strong> You just made a like to this post.</span>
+            <span *ngIf="isDisliked"><strong>{{userApp.username}}</strong> You just made a dislike to this post.</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" *ngIf="isLiked || isDisliked">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<app-navbar></app-navbar>
+
+<div [ngStyle]="{backgroundImage:'url(./assets/images/background.jpg)'}">
+    <div class="row">
+        <div class="col8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+            <ng-container *ngFor="let p of posts">
+                <app-post-details [p]="p"></app-post-details>
+            </ng-container>
+        </div>
+        <div class="col4 col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-2">
+            <div class="card text-center shadow bg-light" style="width: 18rem;" *ngIf="userApp">
+                <div class="card-body">
+                    <img [src]="getUserPicture(userApp.userId)" class="rounded-circle img-thumbnail" alt="..." width="40%">
+                    <h5 class="card-title"><a routerLink="/profile/{{userApp.username}}">{{userApp.username | titlecase}}</a>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{userApp.posts.length}} <fa-icon [icon]="imagesIcon" size="xs">
+                        </fa-icon>
+                    </h6>
+                    <p class="card-text">{{userApp.biography}}</p>
+                </div>
+            </div>
+            <div class="alert alert-secondary mt-2" role="alert" style="width: 30%;">
+                Online Users : {{loggedinUsers}} <fa-icon [icon]="usersIcon" size="xs"></fa-icon>
+            </div>
+        </div>
+    </div>
+    
+    <div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination ml-5 mt-2">
+                <li class="page-item">
+                    <a class="page-link" (click)="firstPage($event)" style="cursor: pointer;" [routerLink]="['/home']"
+                        [queryParams]="{key: key, page: page}">
+                        <<</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" (click)="previousPage($event)" style="cursor: pointer;"
+                        [routerLink]="['/home']" [queryParams]="{key: key, page: page}">
+                        <</a>
+                </li>
+                <li class="page-item" *ngFor="let p of pages | slice:0:2; let i=index">
+                    <a class="page-link active" (click)="setPages(i, $event)" [ngClass]="{'active':i==page}"
+                        [routerLink]="['/home']" [queryParams]="{key: key, page: i}">{{(i)}}</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" (click)="nextPage($event)" style="cursor: pointer;" [routerLink]="['/home']"
+                        [queryParams]="{key: key, page: page}">></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" (click)="lastPage($event)" style="cursor: pointer;" [routerLink]="['/home']"
+                        [queryParams]="{key: key, page: page}">>></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<app-footer></app-footer>

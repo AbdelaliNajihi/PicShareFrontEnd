@@ -1,3 +1,4 @@
+import { Router, Event, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { Component } from '@angular/core';
 
 @Component({
